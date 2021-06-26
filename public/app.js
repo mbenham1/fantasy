@@ -5,8 +5,8 @@ $(document).ready(function () {
     let iterate = 0;
     let timer = 60 * 5 + 1;
     let timer1;
-    let teams = ["Michael", "Matt Reed", "Other"]
-    // let click = 0;
+    let teams = ["Michael", "Matt Reed", "Team 3", "Team 4", "Team 5"];
+    let click = 0;
 
     $("#scrape").on("click", function () {
 
@@ -32,6 +32,14 @@ $(document).ready(function () {
 
     $("#availPlayersTable").on("click", "td", function () {
 
+        click++; 
+
+        if (click > 4) {
+            click = 0;
+        }
+
+        console.log(click);
+
         var date = new Date();
         date = moment(date).format("h:mm:ss a");
 
@@ -46,9 +54,11 @@ $(document).ready(function () {
         // console.log(draftedPlayers);
 
         var tr = $("<tr>").prepend(
-            ("<td>' [" + iterate + "]. " + player + " " + date + "</td>"),
+            ("<td>' [" + iterate + "]. " + player + " " + date + " " + teams[click - 1] + "</td>"),
         );
         $("#draftedTable").prepend(tr).addClass("line");
+
+        $("#on-the-clock").text(teams[click]);
 
         // $(event.target).addClass("line");
         $(event.target).hide();
