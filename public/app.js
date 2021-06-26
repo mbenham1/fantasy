@@ -2,7 +2,11 @@ $(document).ready(function () {
 
     let players = "";
     let draftedPlayers = [];
-    // console.log(link);
+    let iterate = 0;
+    let timer = 60 * 5 + 1;
+    let timer1;
+    let teams = ["Michael", "Matt Reed", "Other"]
+    // let click = 0;
 
     $("#scrape").on("click", function () {
 
@@ -20,11 +24,18 @@ $(document).ready(function () {
                 $("#availPlayersTable").append(tr);
             }
 
+            $("#on-the-clock").text(teams[0]);
+
         })
 
     })
 
     $("#availPlayersTable").on("click", "td", function () {
+
+        var date = new Date();
+        date = moment(date).format("h:mm:ss a");
+
+        iterate++;
 
         // var which = $(this).attr("data-id");
         // console.log(which);
@@ -34,16 +45,27 @@ $(document).ready(function () {
         draftedPlayers.push(player);
         // console.log(draftedPlayers);
 
-        var tr = $("<tr>").append(
-            ("<td>'" + player + "</td>"),
+        var tr = $("<tr>").prepend(
+            ("<td>' [" + iterate + "]. " + player + " " + date + "</td>"),
         );
-        $("#draftedTable").append(tr).addClass("line");
+        $("#draftedTable").prepend(tr).addClass("line");
 
         // $(event.target).addClass("line");
         $(event.target).hide();
 
+        timer = 60 * 5 + 1;
+
+        decrement();
+
     })
 
-}
+    function decrement() {
 
-)
+        clearInterval(timer1);
+        timer--; 
+        timer1 = setInterval(decrement, 1000);
+        $("#timer").text(timer);
+        
+    }
+
+})
