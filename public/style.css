@@ -1,0 +1,10 @@
+.line {
+    text-decoration: line-through;
+    color: red
+}
+
+.table {
+    float: left;
+    /* text-align: center; */
+    width: 50%;
+}

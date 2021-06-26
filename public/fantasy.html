@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy POC</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Fantasy Draft Tracker</h1>
+
+    <div style="margin: 0 auto">
+        <button id="scrape">Get Players</button>
+    </div>
+
+    <br>
+
+
+    <section>
+
+        <div class="table">
+            <table>
+                <thead>
+                    <h2>Available</h2>
+                </thead>
+                <tbody id="availPlayersTable">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table">
+            <table>
+                <thead>
+                    <h2>Drafted</h2>
+                </thead>
+                <tbody id="draftedTable">
+                    <!-- <td class="line"></td> -->
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+
+    <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
