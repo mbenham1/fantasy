@@ -1,5 +1,6 @@
 const axios = require('axios').default;
 var cheerio = require("cheerio");
+let roster = ["Players"];
 
 module.exports = function (app) {
 
@@ -27,51 +28,17 @@ module.exports = function (app) {
 
         });
 
-        // var link = "https://www.pff.com/news/fantasy-football-2021-half-point-ppr-rankings-tiers-erickson";
-
-        // axios.get(link).then(function (response) {
-
-        //     var $ = cheerio.load(response.data);
-
-        //     $('table').each(function (i, element) {
-
-        //         var rankArray = [];
-        //         var playerArray = [];
-        //         var teamArray = [];
-
-        //         var rank = $(element).find("td:nth-child(1)").text();
-        //         var player = $(element).find("td:nth-child(2)").text();
-        //         var team = $(element).find("td:nth-child(3)").text();
-
-        //         $("td:nth-child(1)").each(function (i, element) {
-        //             rankArray[i] = $(this).text();
-        //         });
-
-        //         $("td:nth-child(2)").each(function (i, element) {
-        //             playerArray[i] = $(this).text();
-        //         });
-
-        //         $("td:nth-child(3)").each(function (i, element) {
-        //             teamArray[i] = $(this).text();
-        //         });
-
-        //         // console.log(rankArray);
-        //         // console.log(playerArray);
-        //         // console.log(teamArray);
-
-        //         res.json(playerArray);
-
-        //         // console.log(`Rank: ${rank}`);
-        //         // console.log(`Player: ${player}`);
-        //         //   result.player = $(element).find("td").text();
-        //         //   result.image = $(element).find("img").attr("src");
-        //         //   res.json(result);
-
-        //     })
-        // })
-
-
     });
+
+    // app.get("/:id", function(req, res) {
+    //     console.log(req.body);
+    //     res.json(roster);
+    // })
+
+    // app.post("/:id", function(req, res) {
+    //     // console.log(req.params.id);
+    //     res.json("Received")
+    // })
 
 
 }

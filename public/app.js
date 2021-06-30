@@ -7,6 +7,9 @@ $(document).ready(function () {
     let timer1;
     let teams = ["Michael", "Matt Reed", "Team 3", "Team 4", "Team 5"];
     let click = 0;
+    let flipDraftOrder = false;
+    let round = 1;
+    let pick = 1;
 
     $("#scrape").on("click", function () {
 
@@ -25,20 +28,27 @@ $(document).ready(function () {
             }
 
             $("#on-the-clock").text(teams[0]);
-
+            $("#round").text(round);
+            $("#pick").text(pick);
         })
 
     })
 
     $("#availPlayersTable").on("click", "td", function () {
 
-        click++; 
+        click++;
+        pick++;
+        $("#pick").text(pick);
 
         if (click > 4) {
+            round++;
+            teams.reverse();
             click = 0;
+            flipDraftOrder = !flipDraftOrder;
+            $("#round").text(round);
         }
 
-        console.log(click);
+        // console.log(click);
 
         var date = new Date();
         date = moment(date).format("h:mm:ss a");
@@ -54,9 +64,24 @@ $(document).ready(function () {
         // console.log(draftedPlayers);
 
         var tr = $("<tr>").prepend(
-            ("<td>' [" + iterate + "]. " + player + " " + date + " " + teams[click - 1] + "</td>"),
+            ("<td>' [" + iterate + "]. " + player + " " + date + " " + teams[click === 0 ? 0 : click - 1] + "</td>"),
         );
         $("#draftedTable").prepend(tr).addClass("line");
+
+        // var id = teams[click === 0 ? 0 : click - 1];
+
+        // console.log(id);
+
+        // $.ajax({
+        //     method: "POST",
+        //     url: "/" + id,
+        //     data: {
+        //         player: player
+        //     }
+        // }) 
+        //     .then(function (data) {
+        //         console.log(data);
+        //     });
 
         $("#on-the-clock").text(teams[click]);
 
@@ -75,6 +100,9 @@ $(document).ready(function () {
         timer--; 
         timer1 = setInterval(decrement, 1000);
         $("#timer").text(timer);
+        if (timer === 0) {
+            timer = 60 * 5 + 1;
+        }
         
     }
 
