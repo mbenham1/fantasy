@@ -10,28 +10,65 @@ $(document).ready(function () {
     let flipDraftOrder = false;
     let round = 1;
     let pick = 1;
+    let playersObject = {};
+    let teamViewBoolean = false;
 
     $("#scrape").on("click", function () {
 
         $.get("/scrape", function (data) {
 
             $("#scrape").hide();
-            // console.log(data);
+
             players = data;
             $("#players").text(data);
 
             for (var i = 6; i < 206; i++) {
                 var tr = $("<tr>").append(
+
                     ("<td data-id='" + i + "'>'" + [i - 5] + ". " + data[i] + "</td>"),
-                );
+
+                    );
                 $("#availPlayersTable").append(tr);
             }
 
-            $("#on-the-clock").text(teams[0]);
+            $("#on-the-clock").show().text(teams[0]);
             $("#round").text(round);
             $("#pick").text(pick);
         })
 
+    })
+
+    $("#view-team").on("click", function() {
+
+        $("#team-list").show();
+
+        $.get("/teams", function(data) {
+            playersObject = data;
+            let teamList = [];
+            let selectedTeam = $("#select-team option:selected").text();
+            console.log(selectedTeam);
+
+                for (var i=0; i < playersObject.length; i++) {
+
+                    if (playersObject[i].team === selectedTeam) {
+                        teamList = playersObject[i].player;
+                        $("#right-side").hide();
+                        $("#team-name").text(selectedTeam);
+                        let li = $("<li>" + teamList + "</li>")
+                        $("#team-list").append(li);
+                        console.log(teamList);
+                    }
+                }
+            
+        })
+
+    })
+
+    $("#view-draft").on("click", function() {
+        $("#right-side").show();
+        $("#team-list").text("");
+        $("#team-name").text("");
+        $("#team-list").hide();
     })
 
     $("#availPlayersTable").on("click", "td", function () {
@@ -56,36 +93,35 @@ $(document).ready(function () {
         iterate++;
 
         // var which = $(this).attr("data-id");
-        // console.log(which);
+
         var target = event.target || event.srcElement;
 
         var player = target.innerHTML;
         draftedPlayers.push(player);
-        // console.log(draftedPlayers);
 
         var tr = $("<tr>").prepend(
             ("<td>' [" + iterate + "]. " + player + " " + date + " " + teams[click === 0 ? 0 : click - 1] + "</td>"),
         );
+
         $("#draftedTable").prepend(tr).addClass("line");
 
-        // var id = teams[click === 0 ? 0 : click - 1];
+        var id = teams[click === 0 ? 0 : click - 1];
 
-        // console.log(id);
-
-        // $.ajax({
-        //     method: "POST",
-        //     url: "/" + id,
-        //     data: {
-        //         player: player
-        //     }
-        // }) 
-        //     .then(function (data) {
-        //         console.log(data);
-        //     });
+        $.ajax({
+            method: "POST",
+            url: "/teams",
+            data: {
+                team: id,
+                player: player
+            }
+        }) 
+            .then(function (data) {
+                // console.log(data);
+            });
 
         $("#on-the-clock").text(teams[click]);
 
-        // $(event.target).addClass("line");
+        $(event.target).addClass("line");
         $(event.target).hide();
 
         timer = 60 * 5 + 1;
@@ -105,5 +141,16 @@ $(document).ready(function () {
         }
         
     }
+
+    function populateSelector() {
+
+        for ( var i=0; i < teams.length; i++ ) {
+            let value = $("<option value=" + teams[i] + ">" + teams[i] + "</option>");
+            $("#select-team").prepend(value);
+        }
+
+    }
+
+    populateSelector();
 
 })

@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 var cheerio = require("cheerio");
-let roster = ["Players"];
+let players = [];
 
 module.exports = function (app) {
 
@@ -30,15 +30,17 @@ module.exports = function (app) {
 
     });
 
-    // app.get("/:id", function(req, res) {
-    //     console.log(req.body);
-    //     res.json(roster);
-    // })
+    app.get("/teams", function(req, res) {
+        res.json(players);
+    });
 
-    // app.post("/:id", function(req, res) {
-    //     // console.log(req.params.id);
-    //     res.json("Received")
-    // })
+    app.post("/teams", function(req, res) {
 
+        players.push(req.body);
+        console.log(players);
+
+        res.json("Received");
+
+    });
 
 }
