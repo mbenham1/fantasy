@@ -22,10 +22,10 @@ $(document).ready(function () {
             players = data;
             $("#players").text(data);
 
-            for (var i = 6; i < 206; i++) {
+            for (var i = 121; i < 321; i++) {
                 var tr = $("<tr>").append(
 
-                    ("<td data-id='" + i + "'>'" + [i - 5] + ". " + data[i] + "</td>"),
+                    ("<td data-id='" + i + "'>'" + [i - 120] + ". " + data[i] + "</td>"),
 
                     );
                 $("#availPlayersTable").append(tr);
